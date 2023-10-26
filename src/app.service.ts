@@ -12,6 +12,8 @@ export class AppService {
     this.database = client.db('ordering_system');
   }
 
+  // Added a comment
+
   async createUser(body: any): Promise<any> {
     const users = this.database.collection('users');
     if (body.name == "" || body.age < 0 || body.age > 100 || body.occupation == "") {
