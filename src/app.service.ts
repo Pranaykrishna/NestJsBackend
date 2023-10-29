@@ -13,7 +13,7 @@ export class AppService {
   }
 
   // Added a comment
-  // Checking the push and pull request 
+  // Checking the request and creating a new branch
   async createUser(body: any): Promise<any> {
     const users = this.database.collection('users');
     if (body.name == "" || body.age < 0 || body.age > 100 || body.occupation == "") {
