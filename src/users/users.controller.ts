@@ -5,13 +5,13 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('/user')
+  @Post()
   createUser(@Body() body: any) {
     console.log(body);
     return this.usersService.createUser(body);
   }
 
-  @Get('/user')
+  @Get()
   getUser(@Body() body: any) {
     console.log(body.userId);
     return this.usersService.getUser(body.userId);

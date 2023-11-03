@@ -11,13 +11,13 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
-  @Post('/product')
+  @Post()
   createProduct(@Body() body: any) {
     console.log(body);
     return this.productsService.createProduct(body);
   }
 
-  @Get('/product')
+  @Get()
   getProduct(@Body() body: any) {
     console.log(body.productId);
     return this.productsService.getProduct(body.productId);

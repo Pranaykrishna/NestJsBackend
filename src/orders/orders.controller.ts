@@ -5,13 +5,13 @@ import { OrdersService } from './orders.service';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @Post('/order')
+  @Post()
   createOrder(@Body() body: any) {
     console.log(body);
     return this.ordersService.createOrder(body);
   }
 
-  @Get('/order')
+  @Get()
   getOrder(@Body() body: any) {
     console.log(body.orderId);
     return this.ordersService.getOrder(body.orderId);
