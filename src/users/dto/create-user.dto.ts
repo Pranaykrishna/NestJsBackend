@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-export interface UserDTO {
+export class CreateUserDto {
     name: string;
     age:number;
     occupation:string;

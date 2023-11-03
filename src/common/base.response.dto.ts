@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
+import { CreateUserDto } from "../users/dto/create-user.dto";
 
-import { UserDTO } from '../user/user.dto';
 
 export interface BaseResponse {
     isSuccess: boolean;
@@ -14,5 +14,5 @@ export interface SuccessBaseResponse extends BaseResponse {
 }
 
 export interface GetUserSuccessResponse extends SuccessBaseResponse {
-    data: UserDTO;
+    data: CreateUserDto;
 }
