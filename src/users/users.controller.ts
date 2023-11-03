@@ -14,6 +14,6 @@ export class UsersController {
   @Get()
   getUser(@Body() body: any) {
     console.log(body.userId);
-    return this.usersService.getUser(body.userId);
+    return this.usersService.getUser(body);
   }
 }

@@ -20,7 +20,7 @@ export class ProductsController {
   @Get()
   getProduct(@Body() body: any) {
     console.log(body.productId);
-    return this.productsService.getProduct(body.productId);
+    return this.productsService.getProduct(body);
   }
 
 }

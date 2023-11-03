@@ -14,6 +14,6 @@ export class OrdersController {
   @Get()
   getOrder(@Body() body: any) {
     console.log(body.orderId);
-    return this.ordersService.getOrder(body.orderId);
+    return this.ordersService.getOrder(body);
   }
 }
