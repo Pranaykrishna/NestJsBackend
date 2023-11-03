@@ -1,7 +1,5 @@
 /* eslint-disable prettier/prettier */
-
-
-export interface OrderDTO{
+export class CreateOrderDto {
     userId:string;
     products:[];
     product: string;
