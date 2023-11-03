@@ -1,6 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { Db, MongoClient, ObjectId } from 'mongodb';
+import { UserDTO } from './user/user.dto';
+import { BaseResponse, SuccessBaseResponse, } from './common/base.response.dto';
+import { GetUserDTO } from './user/getuser.dto';
+import { ProductDTO } from './product/product.dto';
+import { GetProductDTO } from './product/getproduct.dto';
+import { OrderDTO } from './order/order.dto';
+import { GetOrderDTO } from './order/getorder.dto';
 
 @Injectable()
 export class AppService {
@@ -12,27 +19,29 @@ export class AppService {
     this.database = client.db('ordering_system');
   }
 
-  // Added a comment
   // Checking the request and creating a new branch
-  async createUser(body: any): Promise<any> {
+  async createUser(body: UserDTO): Promise<BaseResponse> {
     const users = this.database.collection('users');
     if (body.name == "" || body.age < 0 || body.age > 100 || body.occupation == "") {
-      return { isSuccess: false, data: {}, message: "Validation Failed" };
+      return { isSuccess: false, data: {}, message: "Validation Failed" } as BaseResponse;
     }
     const newUser = await users.insertOne(body);
     const newUserId = newUser.insertedId.toString();
-    return { isSuccess: true, data: { userId: newUserId } };
+    return { isSuccess: true, data: { userId: newUserId } } as SuccessBaseResponse;
   }
 
-  async getUser(userId: string) {
-    if (userId == "") {
+  async getUser(body: GetUserDTO): Promise<BaseResponse> {
+    console.log(body);
+    console.log("body.userId is", body.userId)
+    if (body.userId == "") {
       return { isSuccess: false, data: {}, message: "Invalid Id" };
     }
     const users = this.database.collection('users');
     const query = {
-      _id: new ObjectId(userId)
+      _id: new ObjectId(body.userId)
     }
     const user = await users.findOne(query);
+    //console.log("users are: ",users)
     if (query == null || user == null) {
       return { isSuccess: false, data: {}, message: "Invalid User info" };
     }
@@ -40,7 +49,7 @@ export class AppService {
     return { isSuccess: true, data: { user } };
   }
 
-  async createProduct(body: any): Promise<any> {
+  async createProduct(body: ProductDTO): Promise<BaseResponse> {
     const products = this.database.collection('products');
     if (body.product == "" || body.color == "" || body.price == "" || body.Material == "") {
       return { isSuccess: false, data: {}, message: "Invalid data" };
@@ -50,13 +59,13 @@ export class AppService {
     return { isSuccess: true, data: { product_info } };
   }
 
-  async getProduct(productId: string) {
-    if (productId == "") {
+  async getProduct(body: GetProductDTO): Promise<BaseResponse> {
+    if (body.productId == "") {
       return { isSuccess: false, data: {}, message: "Invalid ID" };
     }
     const products = this.database.collection('products');
     const query = {
-      _id: new ObjectId(productId)
+      _id: new ObjectId(body.productId)
     }
     const product = await products.findOne(query);
     if (query == null || product == null) {
@@ -65,7 +74,7 @@ export class AppService {
     return { isSuccess: true, data: { product } };
   }
 
-  async createOrder(body: any): Promise<any> {
+  async createOrder(body: OrderDTO): Promise<BaseResponse> {
     const orders = this.database.collection('orders');
     if (body.userId == "") {
       return { isSuccess: false, data: {}, message: "Invalid user Id" };
@@ -88,10 +97,10 @@ export class AppService {
     return { isSuccess: true, data: { orderId: newOrderId } };
   }
 
-  async getOrder(orderId: string) {
+  async getOrder(body: GetOrderDTO): Promise<BaseResponse> {
     const orders = this.database.collection('orders');
     const query = {
-      _id: new ObjectId(orderId)
+      _id: new ObjectId(body.orderId)
     }
     const order = await orders.findOne(query);
     console.log(order);
